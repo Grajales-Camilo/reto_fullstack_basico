@@ -1,8 +1,10 @@
 import toast from "react-hot-toast";
+import { useAuthStore } from "../../store/useAuthStore";
 import { useCartStore } from "../../store/useCartStore";
 import { useSettingsStore } from "../../store/useSettingsStore";
 
 function ProductCard({ product }) {
+  const user = useAuthStore((state) => state.user);
   const addItem = useCartStore((state) => state.addItem);
   const usdToCop = useSettingsStore((state) => state.usdToCop);
   const productImage = product.imageUrl || product.image;
@@ -19,6 +21,11 @@ function ProductCard({ product }) {
   }).format(priceInCop);
 
   const handleAddToCart = () => {
+    if (!user) {
+      toast("Iniciá sesión para agregar productos al carrito");
+      return;
+    }
+
     addItem({ ...product, image: productImage });
     toast.success(`Agregado: ${product.name}`);
   };
