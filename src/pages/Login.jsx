@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import smile from "../assets/smile.png";
-import { signInWithEmail, signOut } from "../services/authService";
+import { signInWithEmail } from "../services/authService";
 import { useAuthStore } from "../store/useAuthStore";
 
 function Login() {
@@ -26,18 +26,9 @@ function Login() {
     }
   };
 
-  const handleSignOut = async () => {
-    setSubmitting(true);
-    setError("");
-
-    try {
-      await signOut();
-    } catch (authError) {
-      setError(authError.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  if (!loadingSession && user) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
@@ -51,21 +42,6 @@ function Login() {
           </h1>
           <p className="text-lg text-slate-400">Inicia sesión en tu cuenta</p>
         </div>
-
-        {user && (
-          <div className="mb-8 rounded-dna border border-brand-border bg-gray-50 p-4 text-brand-dark">
-            <p className="font-semibold">Sesión activa</p>
-            <p className="break-all text-sm">{user.email}</p>
-            <button
-              className="mt-4 text-sm font-semibold text-brand-blue"
-              disabled={submitting}
-              onClick={handleSignOut}
-              type="button"
-            >
-              Cerrar sesión
-            </button>
-          </div>
-        )}
 
         <form className="space-y-10" onSubmit={handleSubmit}>
           <div className="group relative">

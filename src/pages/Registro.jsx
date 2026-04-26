@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import smile from "../assets/smile.png";
 import { signUpWithEmail } from "../services/authService";
 import { createUserProfile } from "../services/usersService";
+import { useAuthStore } from "../store/useAuthStore";
 
 function Registro() {
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+  const loadingSession = useAuthStore((state) => state.loading);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +40,10 @@ function Registro() {
       setSubmitting(false);
     }
   };
+
+  if (!loadingSession && user) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6">
