@@ -5,6 +5,30 @@ Reto para practicar las habilidades de un desarrollador fullstack moderno.
 > Este repositorio es el punto de partida. Clona este proyecto y usa su contenido como base para desarrollar paso a paso.
 > Trabaja con commits pequeños y claros desde aquí.
 
+## Configuración local
+
+Stack base del proyecto:
+- React + Vite
+- Tailwind CSS v4 con `@tailwindcss/vite`
+- Zustand
+- Axios
+
+Instala las dependencias:
+
+```bash
+npm install
+```
+
+Ejecuta el entorno de desarrollo:
+
+```bash
+npm run dev
+```
+
+Las variables de Firebase se documentan en `.env.example`. Crea un archivo `.env` local con esos nombres cuando se configure Firebase; no subas credenciales al repositorio.
+
+El proyecto usa `base: '/reto_fullstack_basico/'` en `vite.config.js` para preparar el despliegue en GitHub Pages.
+
 ## 🇪🇸 Menú de contenido
 
 ### Instrucciones en Español
