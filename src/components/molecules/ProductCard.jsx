@@ -2,6 +2,7 @@ import { useCartStore } from "../../store/useCartStore";
 
 function ProductCard({ product }) {
   const addItem = useCartStore((state) => state.addItem);
+  const productImage = product.imageUrl || product.image;
   const formattedPrice = new Intl.NumberFormat("es-CO", {
     currency: "COP",
     maximumFractionDigits: 0,
@@ -14,7 +15,7 @@ function ProductCard({ product }) {
         <img
           alt={product.name}
           className="h-full max-h-48 w-full object-contain"
-          src={product.image}
+          src={productImage}
         />
       </div>
 
@@ -30,7 +31,7 @@ function ProductCard({ product }) {
           <p className="text-lg font-bold text-brand-dark">{formattedPrice}</p>
           <button
             className="btn-dna px-4 py-2 text-sm"
-            onClick={() => addItem(product)}
+            onClick={() => addItem({ ...product, image: productImage })}
             type="button"
           >
             Agregar al carrito
