@@ -44,13 +44,13 @@ function Navbar() {
                 className="text-brand-dark hover:text-brand-blue"
                 to="/cart"
               >
-                Carrito ({cartItemsCount})
+                🛒 Carrito ({cartItemsCount})
               </Link>
               <Link
                 className="text-brand-dark hover:text-brand-blue"
                 to="/orders"
               >
-                Ver mis compras
+                🧾 Ver mis compras
               </Link>
               {role === "admin" && (
                 <div className="flex flex-col gap-3 border-brand-border pt-3 sm:flex-row sm:items-center sm:gap-4 sm:border-l sm:pt-0 sm:pl-4">
