@@ -33,7 +33,7 @@ function ProductCard({ product }) {
         <p className="line-clamp-3 text-sm text-brand-muted">
           {product.description}
         </p>
-        <div className="mt-auto flex items-end justify-between gap-3">
+        <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-brand-muted">
               🇺🇸 {formattedUsdPrice}
@@ -43,7 +43,7 @@ function ProductCard({ product }) {
             </p>
           </div>
           <button
-            className="btn-dna px-4 py-2 text-sm"
+            className="btn-dna w-full px-4 py-2 text-sm sm:w-auto"
             onClick={() => addItem({ ...product, image: productImage })}
             type="button"
           >
