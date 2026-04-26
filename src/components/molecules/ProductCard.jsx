@@ -1,4 +1,7 @@
+import { useCartStore } from "../../store/useCartStore";
+
 function ProductCard({ product }) {
+  const addItem = useCartStore((state) => state.addItem);
   const formattedPrice = new Intl.NumberFormat("es-CO", {
     currency: "COP",
     maximumFractionDigits: 0,
@@ -25,7 +28,11 @@ function ProductCard({ product }) {
         </p>
         <div className="mt-auto flex items-center justify-between gap-3">
           <p className="text-lg font-bold text-brand-dark">{formattedPrice}</p>
-          <button className="btn-dna px-4 py-2 text-sm" type="button">
+          <button
+            className="btn-dna px-4 py-2 text-sm"
+            onClick={() => addItem(product)}
+            type="button"
+          >
             Agregar al carrito
           </button>
         </div>
