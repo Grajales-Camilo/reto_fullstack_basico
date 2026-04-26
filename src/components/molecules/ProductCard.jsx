@@ -3,11 +3,17 @@ import { useCartStore } from "../../store/useCartStore";
 function ProductCard({ product }) {
   const addItem = useCartStore((state) => state.addItem);
   const productImage = product.imageUrl || product.image;
-  const formattedPrice = new Intl.NumberFormat("es-CO", {
+  const priceInCop = product.price * 3600;
+  const formattedUsdPrice = new Intl.NumberFormat("en-US", {
+    currency: "USD",
+    maximumFractionDigits: 2,
+    style: "currency",
+  }).format(product.price);
+  const formattedCopPrice = new Intl.NumberFormat("es-CO", {
     currency: "COP",
     maximumFractionDigits: 0,
     style: "currency",
-  }).format(product.price);
+  }).format(priceInCop);
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-dna border border-brand-border bg-white">
@@ -27,8 +33,15 @@ function ProductCard({ product }) {
         <p className="line-clamp-3 text-sm text-brand-muted">
           {product.description}
         </p>
-        <div className="mt-auto flex items-center justify-between gap-3">
-          <p className="text-lg font-bold text-brand-dark">{formattedPrice}</p>
+        <div className="mt-auto flex items-end justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold text-brand-muted">
+              🇺🇸 {formattedUsdPrice}
+            </p>
+            <p className="text-lg font-bold text-brand-dark">
+              🇨🇴 {formattedCopPrice}
+            </p>
+          </div>
           <button
             className="btn-dna px-4 py-2 text-sm"
             onClick={() => addItem({ ...product, image: productImage })}
