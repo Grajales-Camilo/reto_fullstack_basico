@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import smile from "../assets/smile.png";
 import { signUpWithEmail } from "../services/authService";
 import { createUserProfile } from "../services/usersService";
 
-function Registro({ navigate }) {
+function Registro() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -123,13 +125,12 @@ function Registro({ navigate }) {
           </button>
         </form>
 
-        <button
+        <Link
           className="mt-8 text-sm font-semibold text-brand-blue"
-          onClick={() => navigate("/login")}
-          type="button"
+          to="/login"
         >
           Ya tengo cuenta
-        </button>
+        </Link>
       </div>
     </div>
   );

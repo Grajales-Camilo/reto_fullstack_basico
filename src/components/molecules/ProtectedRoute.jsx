@@ -1,16 +1,9 @@
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 function ProtectedRoute({ children, redirectTo = "/login" }) {
   const user = useAuthStore((state) => state.user);
   const loading = useAuthStore((state) => state.loading);
-
-  useEffect(() => {
-    if (!loading && !user && window.location.pathname !== redirectTo) {
-      window.history.pushState({}, "", redirectTo);
-      window.dispatchEvent(new PopStateEvent("popstate"));
-    }
-  }, [loading, redirectTo, user]);
 
   if (loading) {
     return (
@@ -21,7 +14,7 @@ function ProtectedRoute({ children, redirectTo = "/login" }) {
   }
 
   if (!user) {
-    return null;
+    return <Navigate to={redirectTo} replace />;
   }
 
   return children;

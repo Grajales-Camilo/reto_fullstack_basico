@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import smile from "../assets/smile.png";
 import { signInWithEmail, signOut } from "../services/authService";
 import { useAuthStore } from "../store/useAuthStore";
 
-function Login({ navigate }) {
+function Login() {
   const user = useAuthStore((state) => state.user);
   const loadingSession = useAuthStore((state) => state.loading);
   const [email, setEmail] = useState("");
@@ -135,13 +136,12 @@ function Login({ navigate }) {
           </button>
         </form>
 
-        <button
+        <Link
           className="mt-8 text-sm font-semibold text-brand-blue"
-          onClick={() => navigate("/register")}
-          type="button"
+          to="/register"
         >
           Crear cuenta nueva
-        </button>
+        </Link>
       </div>
     </div>
   );

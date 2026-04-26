@@ -1,35 +1,39 @@
 import { StrictMode } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './components/molecules/ProtectedRoute.jsx'
+import Cart from './pages/Cart.jsx'
+import Checkout from './pages/Checkout.jsx'
 import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
 import { useAuthStore } from './store/useAuthStore';
 
-const getInitialPath = () => window.location.pathname || '/login';
-
 function App() {
-  const [path, setPath] = useState(getInitialPath);
   const initAuthListener = useAuthStore((state) => state.initAuthListener);
-
-  const navigate = (nextPath) => {
-    window.history.pushState({}, '', nextPath);
-    setPath(nextPath);
-  };
 
   useEffect(() => {
     initAuthListener();
-
-    const handlePopState = () => setPath(getInitialPath());
-    window.addEventListener('popstate', handlePopState);
-
-    return () => window.removeEventListener('popstate', handlePopState);
   }, [initAuthListener]);
 
-  if (path === '/register') {
-    return <Registro navigate={navigate} />;
-  }
-
-  return <Login navigate={navigate} />;
+  return (
+    <BrowserRouter basename="/reto_fullstack_basico/">
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registro />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 createRoot(document.getElementById('root')).render(
