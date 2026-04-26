@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/molecules/ProtectedRoute.jsx'
+import Navbar from './components/organisms/Navbar.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
 import Home from './pages/Home.jsx'
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <BrowserRouter basename="/reto_fullstack_basico/">
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
