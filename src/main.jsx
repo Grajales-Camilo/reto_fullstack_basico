@@ -12,13 +12,16 @@ import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
 import Upload from './pages/Upload.jsx'
 import { useAuthStore } from './store/useAuthStore';
+import { useSettingsStore } from './store/useSettingsStore';
 
 function App() {
   const initAuthListener = useAuthStore((state) => state.initAuthListener);
+  const fetchRate = useSettingsStore((state) => state.fetchRate);
 
   useEffect(() => {
     initAuthListener();
-  }, [initAuthListener]);
+    fetchRate();
+  }, [fetchRate, initAuthListener]);
 
   return (
     <BrowserRouter basename="/reto_fullstack_basico/">

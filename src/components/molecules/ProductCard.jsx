@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
 import { useCartStore } from "../../store/useCartStore";
+import { useSettingsStore } from "../../store/useSettingsStore";
 
 function ProductCard({ product }) {
   const addItem = useCartStore((state) => state.addItem);
+  const usdToCop = useSettingsStore((state) => state.usdToCop);
   const productImage = product.imageUrl || product.image;
-  const priceInCop = product.price * 3600;
+  const priceInCop = product.price * usdToCop;
   const formattedUsdPrice = new Intl.NumberFormat("en-US", {
     currency: "USD",
     maximumFractionDigits: 2,

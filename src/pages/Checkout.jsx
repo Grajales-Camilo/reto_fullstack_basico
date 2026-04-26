@@ -3,25 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { createOrder } from "../services/ordersService";
 import { useAuthStore } from "../store/useAuthStore";
 import { useCartStore } from "../store/useCartStore";
+import { useSettingsStore } from "../store/useSettingsStore";
 
 const currencyFormatter = new Intl.NumberFormat("es-CO", {
   currency: "COP",
   maximumFractionDigits: 0,
   style: "currency",
 });
-const COP_EXCHANGE_RATE = 3600;
 
 function Checkout() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
+  const usdToCop = useSettingsStore((state) => state.usdToCop);
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState("");
   const total = items.reduce(
     (accumulator, item) =>
-      accumulator + item.price * COP_EXCHANGE_RATE * item.quantity,
+      accumulator + item.price * usdToCop * item.quantity,
     0,
   );
 
@@ -88,12 +89,12 @@ function Checkout() {
                       <p className="font-semibold">{item.name}</p>
                       <p className="text-sm text-brand-muted">
                         {item.quantity} x{" "}
-                        {currencyFormatter.format(item.price * COP_EXCHANGE_RATE)}
+                        {currencyFormatter.format(item.price * usdToCop)}
                       </p>
                     </div>
                     <p className="font-bold">
                       {currencyFormatter.format(
-                        item.price * COP_EXCHANGE_RATE * item.quantity,
+                        item.price * usdToCop * item.quantity,
                       )}
                     </p>
                   </div>

@@ -1,21 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/useCartStore";
+import { useSettingsStore } from "../store/useSettingsStore";
 
 const currencyFormatter = new Intl.NumberFormat("es-CO", {
   currency: "COP",
   maximumFractionDigits: 0,
   style: "currency",
 });
-const COP_EXCHANGE_RATE = 3600;
 
 function Cart() {
   const navigate = useNavigate();
   const items = useCartStore((state) => state.items);
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const usdToCop = useSettingsStore((state) => state.usdToCop);
   const total = items.reduce(
     (accumulator, item) =>
-      accumulator + item.price * COP_EXCHANGE_RATE * item.quantity,
+      accumulator + item.price * usdToCop * item.quantity,
     0,
   );
 
@@ -57,7 +58,7 @@ function Cart() {
                   <div>
                     <h2 className="text-lg font-bold">{item.name}</h2>
                     <p className="mt-1 text-brand-muted">
-                      {currencyFormatter.format(item.price * COP_EXCHANGE_RATE)}
+                      {currencyFormatter.format(item.price * usdToCop)}
                     </p>
                     <button
                       className="mt-3 text-sm font-semibold text-red-600"
