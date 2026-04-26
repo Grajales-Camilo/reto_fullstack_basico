@@ -29,6 +29,21 @@ Las variables de Firebase se documentan en `.env.example`. Crea un archivo `.env
 
 El proyecto usa `base: '/reto_fullstack_basico/'` en `vite.config.js` para preparar el despliegue en GitHub Pages.
 
+## Arquitectura de carpetas
+
+La aplicación organiza `src/` con Atomic Design y carpetas de soporte:
+
+- `components/atoms`: piezas básicas reutilizables, como títulos, botones, inputs y labels.
+- `components/molecules`: combinaciones pequeñas de atoms, como formularios simples o cards.
+- `components/organisms`: secciones completas de interfaz, como header, footer, galería o carrito.
+- `components/templates`: layouts reutilizables para páginas.
+- `pages`: vistas conectadas a rutas, como login, registro, galería, carrito y checkout.
+- `store`: stores globales con Zustand.
+- `services`: integración con APIs externas y Firebase.
+- `hooks`: hooks reutilizables de React.
+- `mockdata`: datos temporales de apoyo durante el desarrollo.
+- `assets`: imágenes y recursos estáticos importados desde React.
+
 ## 🇪🇸 Menú de contenido
 
 ### Instrucciones en Español
