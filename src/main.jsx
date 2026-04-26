@@ -7,6 +7,7 @@ import ProtectedRoute from './components/molecules/ProtectedRoute.jsx'
 import Navbar from './components/organisms/Navbar.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
+import DollarRate from './pages/DollarRate.jsx'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
@@ -45,6 +46,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Upload />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dollar"
+          element={
+            <ProtectedRoute>
+              <DollarRate />
             </ProtectedRoute>
           }
         />
