@@ -29,6 +29,11 @@ export async function updateProduct(id, data) {
   await updateDoc(productRef, data);
 }
 
+export async function updateProductImage(productId, imageUrl) {
+  const productRef = doc(db, "products", productId);
+  await updateDoc(productRef, { imageUrl });
+}
+
 export async function deleteProduct(id) {
   const productRef = doc(db, "products", id);
   await deleteDoc(productRef);
