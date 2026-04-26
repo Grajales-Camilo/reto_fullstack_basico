@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useCartStore } from "../../store/useCartStore";
 
 function ProductCard({ product }) {
@@ -14,6 +15,11 @@ function ProductCard({ product }) {
     maximumFractionDigits: 0,
     style: "currency",
   }).format(priceInCop);
+
+  const handleAddToCart = () => {
+    addItem({ ...product, image: productImage });
+    toast.success(`Agregado: ${product.name}`);
+  };
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-dna border border-brand-border bg-white">
@@ -44,7 +50,7 @@ function ProductCard({ product }) {
           </div>
           <button
             className="btn-dna w-full px-4 py-2 text-sm sm:w-auto"
-            onClick={() => addItem({ ...product, image: productImage })}
+            onClick={handleAddToCart}
             type="button"
           >
             Agregar al carrito
