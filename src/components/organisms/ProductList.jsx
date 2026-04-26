@@ -1,0 +1,113 @@
+import { useEffect } from "react";
+import ProductCard from "../molecules/ProductCard";
+import { useProductStore } from "../../store/useProductStore";
+
+const PRODUCTS_PER_PAGE = 6;
+
+function ProductList() {
+  const products = useProductStore((state) => state.products);
+  const loading = useProductStore((state) => state.loading);
+  const error = useProductStore((state) => state.error);
+  const searchQuery = useProductStore((state) => state.searchQuery);
+  const currentPage = useProductStore((state) => state.currentPage);
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
+  const setPage = useProductStore((state) => state.setPage);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filteredProducts = products.filter((product) => {
+    const searchableText = [
+      product.name,
+      product.description,
+      product.category,
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(normalizedQuery);
+  });
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE),
+  );
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * PRODUCTS_PER_PAGE;
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + PRODUCTS_PER_PAGE,
+  );
+
+  if (loading) {
+    return <p className="text-brand-muted">Cargando productos...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-600">{error}</p>;
+  }
+
+  return (
+    <section>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <p className="text-sm text-brand-muted">
+          {filteredProducts.length} productos encontrados
+        </p>
+        <p className="text-sm text-brand-muted">
+          Página {safeCurrentPage} de {totalPages}
+        </p>
+      </div>
+
+      {paginatedProducts.length === 0 ? (
+        <p className="text-brand-muted">No hay productos para mostrar.</p>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {paginatedProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
+
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+        <button
+          className="rounded-dna border border-brand-border px-4 py-2 text-sm font-semibold text-brand-dark disabled:opacity-40"
+          disabled={safeCurrentPage === 1}
+          onClick={() => setPage(safeCurrentPage - 1)}
+          type="button"
+        >
+          Anterior
+        </button>
+
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <button
+              className={`rounded-dna border px-4 py-2 text-sm font-semibold ${
+                page === safeCurrentPage
+                  ? "border-brand-blue bg-brand-blue text-white"
+                  : "border-brand-border text-brand-dark"
+              }`}
+              key={page}
+              onClick={() => setPage(page)}
+              type="button"
+            >
+              {page}
+            </button>
+          ),
+        )}
+
+        <button
+          className="rounded-dna border border-brand-border px-4 py-2 text-sm font-semibold text-brand-dark disabled:opacity-40"
+          disabled={safeCurrentPage === totalPages}
+          onClick={() => setPage(safeCurrentPage + 1)}
+          type="button"
+        >
+          Siguiente
+        </button>
+      </div>
+    </section>
+  );
+}
+
+export default ProductList;
