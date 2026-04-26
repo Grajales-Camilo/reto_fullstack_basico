@@ -104,7 +104,7 @@ function Login() {
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
-            className="btn-dna w-3/5 py-4 text-xl font-bold"
+            className="btn-dna mx-auto w-3/5 py-4 text-xl font-bold"
             disabled={submitting || loadingSession}
             type="submit"
           >
@@ -113,7 +113,7 @@ function Login() {
         </form>
 
         <Link
-          className="mt-8 text-sm font-semibold text-brand-blue"
+          className="mt-8 block text-center text-sm font-semibold text-brand-blue"
           to="/register"
         >
           Crear cuenta nueva
