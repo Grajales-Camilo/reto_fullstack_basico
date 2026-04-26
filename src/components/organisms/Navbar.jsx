@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../../assets/Logo.png";
 import { signOut } from "../../services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useCartStore } from "../../store/useCartStore";
@@ -20,7 +21,15 @@ function Navbar() {
   return (
     <header className="border-b border-brand-border bg-white text-brand-dark">
       <nav className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <Link className="text-lg font-bold text-brand-blue" to="/">
+        <Link
+          className="flex items-center gap-3 text-lg font-bold text-brand-blue"
+          to="/"
+        >
+          <img
+            alt="Logo MiniStore"
+            className="h-10 w-10 rounded-dna object-contain"
+            src={logo}
+          />
           MiniStore
         </Link>
 
