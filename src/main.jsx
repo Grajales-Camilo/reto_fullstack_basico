@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout.jsx'
 import DollarRate from './pages/DollarRate.jsx'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx';
+import Orders from './pages/Orders.jsx'
 import Registro from './pages/Registro.jsx';
 import Upload from './pages/Upload.jsx'
 import { useAuthStore } from './store/useAuthStore';
@@ -54,6 +55,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DollarRate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
             </ProtectedRoute>
           }
         />

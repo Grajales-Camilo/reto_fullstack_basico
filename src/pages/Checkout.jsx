@@ -18,7 +18,7 @@ function Checkout() {
   const clearCart = useCartStore((state) => state.clearCart);
   const usdToCop = useSettingsStore((state) => state.usdToCop);
   const [submitting, setSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [error, setError] = useState("");
   const total = items.reduce(
     (accumulator, item) =>
@@ -28,7 +28,7 @@ function Checkout() {
 
   const handleConfirmOrder = async () => {
     setSubmitting(true);
-    setSuccessMessage("");
+    setOrderConfirmed(false);
     setError("");
 
     try {
@@ -38,7 +38,7 @@ function Checkout() {
         userId: user.uid,
       });
       clearCart();
-      setSuccessMessage("Compra confirmada correctamente.");
+      setOrderConfirmed(true);
     } catch (orderError) {
       setError(orderError.message);
     } finally {
@@ -61,18 +61,24 @@ function Checkout() {
             <p className="text-brand-muted">
               No hay productos en el carrito para confirmar.
             </p>
-            {successMessage && (
-              <p className="mt-4 text-sm font-semibold text-green-700">
-                {successMessage}
-              </p>
+            {orderConfirmed && (
+              <button
+                className="btn-dna mt-6"
+                onClick={() => navigate("/orders")}
+                type="button"
+              >
+                Ver mis compras
+              </button>
             )}
-            <button
-              className="btn-dna mt-6"
-              onClick={() => navigate("/")}
-              type="button"
-            >
-              Volver a productos
-            </button>
+            {!orderConfirmed && (
+              <button
+                className="btn-dna mt-6"
+                onClick={() => navigate("/")}
+                type="button"
+              >
+                Volver a productos
+              </button>
+            )}
           </div>
         ) : (
           <div className="space-y-6">
