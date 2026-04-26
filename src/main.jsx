@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/molecules/ProtectedRoute.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
+import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
 import { useAuthStore } from './store/useAuthStore';
@@ -19,7 +20,7 @@ function App() {
   return (
     <BrowserRouter basename="/reto_fullstack_basico/">
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registro />} />
         <Route path="/cart" element={<Cart />} />
