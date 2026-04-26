@@ -36,6 +36,12 @@ function Navbar() {
               >
                 Carrito ({cartItemsCount})
               </Link>
+              <Link
+                className="text-brand-dark hover:text-brand-blue"
+                to="/upload"
+              >
+                Subir imagen
+              </Link>
               <button
                 className="rounded-dna border border-brand-border px-4 py-2 text-brand-dark transition hover:border-brand-blue hover:text-brand-blue"
                 disabled={loading}

@@ -9,6 +9,7 @@ import Checkout from './pages/Checkout.jsx'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx';
 import Registro from './pages/Registro.jsx';
+import Upload from './pages/Upload.jsx'
 import { useAuthStore } from './store/useAuthStore';
 
 function App() {
@@ -31,6 +32,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Checkout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <ProtectedRoute>
+              <Upload />
             </ProtectedRoute>
           }
         />
