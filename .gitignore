@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+*.zip
+MiniStore-1.0.0.zip
 
 # Editor directories and files
 .vscode/*
