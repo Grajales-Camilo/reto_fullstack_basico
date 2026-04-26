@@ -18,12 +18,12 @@ function Navbar() {
 
   return (
     <header className="border-b border-brand-border bg-white text-brand-dark">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <nav className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <Link className="text-lg font-bold text-brand-blue" to="/">
           MiniStore
         </Link>
 
-        <div className="flex flex-wrap items-center gap-4 text-sm font-semibold">
+        <div className="flex flex-col gap-3 text-sm font-semibold sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
           <Link className="text-brand-dark hover:text-brand-blue" to="/">
             Home
           </Link>
@@ -43,7 +43,7 @@ function Navbar() {
                 Subir imagen
               </Link>
               <button
-                className="rounded-dna border border-brand-border px-4 py-2 text-brand-dark transition hover:border-brand-blue hover:text-brand-blue"
+                className="rounded-dna border border-brand-border px-4 py-2 text-brand-dark transition hover:border-brand-blue hover:text-brand-blue sm:w-auto"
                 disabled={loading}
                 onClick={handleSignOut}
                 type="button"
