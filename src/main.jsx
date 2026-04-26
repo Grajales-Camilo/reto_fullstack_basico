@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/molecules/ProtectedRoute.jsx'
 import Navbar from './components/organisms/Navbar.jsx'
@@ -22,6 +23,7 @@ function App() {
   return (
     <BrowserRouter basename="/reto_fullstack_basico/">
       <Navbar />
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
