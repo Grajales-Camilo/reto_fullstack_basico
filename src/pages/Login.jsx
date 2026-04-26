@@ -1,7 +1,8 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 import smile from "../assets/smile.png";
-import { signInWithEmail } from "../services/authService";
+import { resetPassword, signInWithEmail } from "../services/authService";
 import { useAuthStore } from "../store/useAuthStore";
 
 function Login() {
@@ -9,6 +10,9 @@ function Login() {
   const loadingSession = useAuthStore((state) => state.loading);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetSubmitting, setResetSubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,6 +27,22 @@ function Login() {
       setError(authError.message);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleResetPassword = async (event) => {
+    event.preventDefault();
+    setResetSubmitting(true);
+
+    try {
+      await resetPassword(resetEmail);
+      toast.success("Revisá tu correo para restablecer tu contraseña");
+      setResetEmail("");
+      setShowResetPassword(false);
+    } catch (resetError) {
+      toast.error(resetError.message);
+    } finally {
+      setResetSubmitting(false);
     }
   };
 
@@ -95,11 +115,43 @@ function Login() {
             </label>
             <button
               className="text-lg text-blue-500 transition-colors hover:text-blue-600"
+              onClick={() => setShowResetPassword((currentValue) => !currentValue)}
               type="button"
             >
               ¿Olvidaste tu contraseña?
             </button>
           </div>
+
+          {showResetPassword && (
+            <div className="rounded-dna border border-brand-border bg-gray-50 p-4">
+              <label
+                className="mb-2 block text-sm font-semibold text-brand-dark"
+                htmlFor="reset-email"
+              >
+                Correo para recuperar contraseña
+              </label>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  autoComplete="email"
+                  className="input-dna bg-white"
+                  id="reset-email"
+                  onChange={(event) => setResetEmail(event.target.value)}
+                  placeholder="correo@ejemplo.com"
+                  required
+                  type="email"
+                  value={resetEmail}
+                />
+                <button
+                  className="btn-dna px-4 py-2 text-sm"
+                  disabled={resetSubmitting}
+                  onClick={handleResetPassword}
+                  type="button"
+                >
+                  {resetSubmitting ? "Enviando..." : "Enviar"}
+                </button>
+              </div>
+            </div>
+          )}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
