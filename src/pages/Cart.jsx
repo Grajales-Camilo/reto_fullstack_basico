@@ -6,6 +6,7 @@ const currencyFormatter = new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0,
   style: "currency",
 });
+const COP_EXCHANGE_RATE = 3600;
 
 function Cart() {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ function Cart() {
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const total = items.reduce(
-    (accumulator, item) => accumulator + item.price * item.quantity,
+    (accumulator, item) =>
+      accumulator + item.price * COP_EXCHANGE_RATE * item.quantity,
     0,
   );
 
@@ -55,7 +57,7 @@ function Cart() {
                   <div>
                     <h2 className="text-lg font-bold">{item.name}</h2>
                     <p className="mt-1 text-brand-muted">
-                      {currencyFormatter.format(item.price)}
+                      {currencyFormatter.format(item.price * COP_EXCHANGE_RATE)}
                     </p>
                     <button
                       className="mt-3 text-sm font-semibold text-red-600"

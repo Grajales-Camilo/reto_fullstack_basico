@@ -9,6 +9,7 @@ const currencyFormatter = new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0,
   style: "currency",
 });
+const COP_EXCHANGE_RATE = 3600;
 
 function Checkout() {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ function Checkout() {
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState("");
   const total = items.reduce(
-    (accumulator, item) => accumulator + item.price * item.quantity,
+    (accumulator, item) =>
+      accumulator + item.price * COP_EXCHANGE_RATE * item.quantity,
     0,
   );
 
@@ -85,11 +87,14 @@ function Checkout() {
                     <div>
                       <p className="font-semibold">{item.name}</p>
                       <p className="text-sm text-brand-muted">
-                        {item.quantity} x {currencyFormatter.format(item.price)}
+                        {item.quantity} x{" "}
+                        {currencyFormatter.format(item.price * COP_EXCHANGE_RATE)}
                       </p>
                     </div>
                     <p className="font-bold">
-                      {currencyFormatter.format(item.price * item.quantity)}
+                      {currencyFormatter.format(
+                        item.price * COP_EXCHANGE_RATE * item.quantity,
+                      )}
                     </p>
                   </div>
                 ))}
