@@ -86,7 +86,7 @@ El Taller 3 exige aplicar sobre el prototipo existente los elementos descritos a
 1. Verificar el estado actual de `useProductStore.js`. Si ya tiene un campo `status` o `loading`, evaluar si cumple. Si no, agregar un campo `status` con los cuatro valores.
 2. Mostrar un **spinner o skeleton visible** en `ProductList.jsx` o `Home.jsx` mientras `status === 'loading'`.
 3. Mostrar un **mensaje de error visible** (no solo consola) cuando `status === 'error'`. El mensaje debe tener `role="alert"` para accesibilidad.
-4. El botón Buscar debe aparecer deshabilitado visualmente cuando hay una operación en curso.
+4. El input de búsqueda en Home.jsx debe aparecer deshabilitado (atributo `disabled` y estilo visual atenuado) mientras `status === 'loading'` en el fetch inicial de productos. La búsqueda es en tiempo real con onChange, no hay botón Buscar.
 5. Agregar `aria-live="polite"` al contenedor donde aparecen los mensajes de estado.
 
 **Archivos a tocar:** `src/store/useProductStore.js`, el componente que renderiza la lista (verificar si es `ProductList.jsx`, `Home.jsx` o ambos).
