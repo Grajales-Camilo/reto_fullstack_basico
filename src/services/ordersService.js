@@ -25,8 +25,15 @@ export async function getOrdersByUser(userId) {
   const ordersQuery = query(ordersCollection, where("userId", "==", userId));
   const snapshot = await getDocs(ordersQuery);
 
-  return snapshot.docs.map((orderDoc) => ({
-    id: orderDoc.id,
-    ...orderDoc.data(),
-  }));
+  return snapshot.docs
+    .map((orderDoc) => ({
+      id: orderDoc.id,
+      ...orderDoc.data(),
+    }))
+    .sort((firstOrder, secondOrder) => {
+      const firstDate = firstOrder.createdAt?.toMillis?.() ?? 0;
+      const secondDate = secondOrder.createdAt?.toMillis?.() ?? 0;
+
+      return secondDate - firstDate;
+    });
 }
