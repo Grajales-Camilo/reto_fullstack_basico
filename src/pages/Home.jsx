@@ -2,6 +2,7 @@ import ProductList from "../components/organisms/ProductList";
 import { useProductStore } from "../store/useProductStore";
 
 function Home() {
+  const status = useProductStore((state) => state.status);
   const searchQuery = useProductStore((state) => state.searchQuery);
   const setSearchQuery = useProductStore((state) => state.setSearchQuery);
 
@@ -21,7 +22,8 @@ function Home() {
               Buscar producto
             </span>
             <input
-              className="input-dna bg-white"
+              className="input-dna bg-white disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={status === "loading"}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Nombre, descripción o categoría"
               type="search"

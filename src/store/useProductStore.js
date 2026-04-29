@@ -3,20 +3,24 @@ import { getProducts } from "../services/productsService";
 
 export const useProductStore = create((set) => ({
   products: [],
+  status: "idle",
+  errorMessage: "",
   loading: false,
   error: "",
   searchQuery: "",
   currentPage: 1,
   fetchProducts: async () => {
-    set({ loading: true, error: "" });
+    set({ status: "loading", errorMessage: "", loading: true, error: "" });
 
     try {
       const products = await getProducts();
-      set({ products, loading: false });
+      set({ products, status: "success", loading: false });
     } catch (error) {
       set({
-        error: error.message,
+        status: "error",
+        errorMessage: error.message,
         loading: false,
+        error: error.message,
       });
     }
   },

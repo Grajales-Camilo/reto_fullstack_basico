@@ -6,8 +6,8 @@ const PRODUCTS_PER_PAGE = 6;
 
 function ProductList() {
   const products = useProductStore((state) => state.products);
-  const loading = useProductStore((state) => state.loading);
-  const error = useProductStore((state) => state.error);
+  const status = useProductStore((state) => state.status);
+  const errorMessage = useProductStore((state) => state.errorMessage);
   const searchQuery = useProductStore((state) => state.searchQuery);
   const currentPage = useProductStore((state) => state.currentPage);
   const fetchProducts = useProductStore((state) => state.fetchProducts);
@@ -41,12 +41,50 @@ function ProductList() {
     startIndex + PRODUCTS_PER_PAGE,
   );
 
-  if (loading) {
-    return <p className="text-brand-muted">Cargando productos...</p>;
+  if (status === "loading") {
+    return (
+      <div
+        aria-live="polite"
+        className="flex items-center justify-center py-12"
+        role="status"
+      >
+        <svg
+          aria-hidden="true"
+          className="h-10 w-10 animate-spin text-brand-blue"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-75"
+            d="M4 12a8 8 0 0 1 8-8"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="4"
+          />
+        </svg>
+        <span className="sr-only">Cargando productos</span>
+      </div>
+    );
   }
 
-  if (error) {
-    return <p className="text-red-600">{error}</p>;
+  if (status === "error") {
+    return (
+      <div
+        aria-live="assertive"
+        className="rounded-dna border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700"
+        role="alert"
+      >
+        Error: {errorMessage}
+      </div>
+    );
   }
 
   return (
