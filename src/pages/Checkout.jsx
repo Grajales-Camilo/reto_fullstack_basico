@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { log } from "../services/loggerService";
 import { createOrder } from "../services/ordersService";
 import { useAuthStore } from "../store/useAuthStore";
 import { useCartStore } from "../store/useCartStore";
@@ -25,6 +26,15 @@ function Checkout() {
       accumulator + item.price * usdToCop * item.quantity,
     0,
   );
+  const itemsCount = items.reduce(
+    (accumulator, item) => accumulator + item.quantity,
+    0,
+  );
+
+  useEffect(() => {
+    log("info", "checkout_start", { itemsCount, total });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleConfirmOrder = async () => {
     setSubmitting(true);
@@ -32,14 +42,25 @@ function Checkout() {
     setError("");
 
     try {
-      await createOrder({
+      const orderId = await createOrder({
         items,
         total,
         userId: user.uid,
       });
+
+      log("info", "checkout_confirm", {
+        orderId,
+        total,
+        itemsCount,
+      });
+
       clearCart();
       setOrderConfirmed(true);
     } catch (orderError) {
+      log("error", "checkout_error", {
+        message: orderError.message,
+      });
+
       setError(orderError.message);
     } finally {
       setSubmitting(false);

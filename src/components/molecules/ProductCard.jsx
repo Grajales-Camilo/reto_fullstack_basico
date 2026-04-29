@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { log } from "../../services/loggerService";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useCartStore } from "../../store/useCartStore";
 import { useSettingsStore } from "../../store/useSettingsStore";
@@ -33,6 +34,15 @@ function ProductCard({ product }) {
     toast.success(`Agregado: ${product.name}`);
   };
 
+  const handleProductView = () => {
+    log("info", "product_view", {
+      productId: product.id,
+      productName: product.name,
+    });
+
+    setIsImageZoomed((currentValue) => !currentValue);
+  };
+
   const handleImageMouseMove = (event) => {
     if (!isImageZoomed) {
       return;
@@ -56,7 +66,7 @@ function ProductCard({ product }) {
         className={`flex aspect-square items-center justify-center overflow-hidden bg-gray-50 p-6 ${
           isImageZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
         }`}
-        onClick={() => setIsImageZoomed((currentValue) => !currentValue)}
+        onClick={handleProductView}
         onMouseMove={handleImageMouseMove}
         type="button"
       >

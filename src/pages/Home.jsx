@@ -1,10 +1,21 @@
 import ProductList from "../components/organisms/ProductList";
+import { log } from "../services/loggerService";
 import { useProductStore } from "../store/useProductStore";
 
 function Home() {
   const status = useProductStore((state) => state.status);
   const searchQuery = useProductStore((state) => state.searchQuery);
   const setSearchQuery = useProductStore((state) => state.setSearchQuery);
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+
+    setSearchQuery(query);
+
+    if (query.length >= 2 || query === "") {
+      log("info", "product_search", { query });
+    }
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 px-6 py-10 text-brand-dark">
@@ -24,7 +35,7 @@ function Home() {
             <input
               className="input-dna bg-white disabled:cursor-not-allowed disabled:opacity-50"
               disabled={status === "loading"}
-              onChange={(event) => setSearchQuery(event.target.value)}
+              onChange={handleSearchChange}
               placeholder="Nombre, descripción o categoría"
               type="search"
               value={searchQuery}

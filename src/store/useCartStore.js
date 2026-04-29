@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { log } from "../services/loggerService";
 
 const CART_STORAGE_KEY = "cart";
 
@@ -41,6 +42,14 @@ export const useCartStore = create((set) => ({
               quantity: 1,
             },
           ];
+
+      const nextItem = items.find((item) => item.id === product.id);
+
+      log("info", "add_to_cart", {
+        productId: product.id,
+        productName: product.name,
+        quantity: nextItem?.quantity ?? 1,
+      });
 
       persistItems(items);
       return { items };
