@@ -42,6 +42,12 @@ function Home() {
               type="search"
               value={searchQuery}
             />
+            <span
+              aria-live="polite"
+              className="mt-2 block min-h-5 text-sm text-brand-muted"
+            >
+              {searchQuery.length === 1 ? t("validations.searchMin") : ""}
+            </span>
           </label>
         </div>
 

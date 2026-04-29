@@ -13,6 +13,12 @@ const resources = {
       "navbar.upload": "Subir imagen",
       "navbar.dollar": "Dólar hoy",
       "navbar.admin": "Admin",
+      "cart.title": "Carrito",
+      "cart.subtitle": "Revisa tus productos antes de continuar con el checkout.",
+      "cart.remove": "Quitar",
+      "cart.quantity": "Cantidad",
+      "cart.total": "Total",
+      "cart.goToCheckout": "Ir a Checkout",
       "home.title": "Galería de productos",
       "home.subtitle":
         "Productos cargados desde Firestore con búsqueda y paginación local.",
@@ -28,6 +34,13 @@ const resources = {
       "language.selector": "Idioma",
       "language.spanish": "Español",
       "language.english": "Inglés",
+      "validations.searchMin":
+        "Escribe al menos 2 caracteres para buscar mejor",
+      "validations.searchNoResults":
+        'No se encontraron productos para "{{query}}"',
+      "validations.cartEmpty":
+        "Tu carrito está vacío. Agrega productos desde la galería.",
+      "validations.goToGallery": "Ir a la galería",
     },
   },
   en: {
@@ -41,6 +54,12 @@ const resources = {
       "navbar.upload": "Upload image",
       "navbar.dollar": "Dollar rate",
       "navbar.admin": "Admin",
+      "cart.title": "Cart",
+      "cart.subtitle": "Review your products before continuing to checkout.",
+      "cart.remove": "Remove",
+      "cart.quantity": "Quantity",
+      "cart.total": "Total",
+      "cart.goToCheckout": "Go to checkout",
       "home.title": "Product gallery",
       "home.subtitle":
         "Products loaded from Firestore with search and local pagination.",
@@ -56,6 +75,11 @@ const resources = {
       "language.selector": "Language",
       "language.spanish": "Spanish",
       "language.english": "English",
+      "validations.searchMin": "Type at least 2 characters for better search",
+      "validations.searchNoResults": 'No products found for "{{query}}"',
+      "validations.cartEmpty":
+        "Your cart is empty. Add products from the gallery.",
+      "validations.goToGallery": "Go to gallery",
     },
   },
 };

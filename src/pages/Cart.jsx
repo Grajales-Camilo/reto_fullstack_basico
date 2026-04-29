@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useCartStore } from "../store/useCartStore";
 import { useSettingsStore } from "../store/useSettingsStore";
 
@@ -9,6 +10,7 @@ const currencyFormatter = new Intl.NumberFormat("es-CO", {
 });
 
 function Cart() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const items = useCartStore((state) => state.items);
   const removeItem = useCartStore((state) => state.removeItem);
@@ -24,21 +26,21 @@ function Cart() {
     <main className="min-h-screen bg-gray-50 px-6 py-10 text-brand-dark">
       <section className="mx-auto max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Carrito</h1>
+          <h1 className="text-3xl font-bold">{t("cart.title")}</h1>
           <p className="mt-3 text-brand-muted">
-            Revisa tus productos antes de continuar con el checkout.
+            {t("cart.subtitle")}
           </p>
         </div>
 
         {items.length === 0 ? (
           <div className="rounded-dna border border-brand-border bg-white p-6">
-            <p className="text-brand-muted">Tu carrito está vacío.</p>
+            <p className="text-brand-muted">{t("validations.cartEmpty")}</p>
             <button
               className="btn-dna mt-6"
               onClick={() => navigate("/")}
               type="button"
             >
-              Ver productos
+              {t("validations.goToGallery")}
             </button>
           </div>
         ) : (
@@ -65,13 +67,13 @@ function Cart() {
                       onClick={() => removeItem(item.id)}
                       type="button"
                     >
-                      Quitar
+                      {t("cart.remove")}
                     </button>
                   </div>
 
                   <label className="w-28">
                     <span className="mb-2 block text-sm font-semibold">
-                      Cantidad
+                      {t("cart.quantity")}
                     </span>
                     <input
                       className="input-dna bg-white"
@@ -90,7 +92,7 @@ function Cart() {
             <div className="flex flex-col gap-4 rounded-dna border border-brand-border bg-white p-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase text-brand-blue">
-                  Total
+                  {t("cart.total")}
                 </p>
                 <p className="text-2xl font-bold">
                   {currencyFormatter.format(total)}
@@ -102,7 +104,7 @@ function Cart() {
                 onClick={() => navigate("/checkout")}
                 type="button"
               >
-                Ir a Checkout
+                {t("cart.goToCheckout")}
               </button>
             </div>
           </div>
