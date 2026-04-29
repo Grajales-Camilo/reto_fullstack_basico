@@ -1,10 +1,12 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import ProductCard from "../molecules/ProductCard";
 import { useProductStore } from "../../store/useProductStore";
 
 const PRODUCTS_PER_PAGE = 6;
 
 function ProductList() {
+  const { t } = useTranslation();
   const products = useProductStore((state) => state.products);
   const status = useProductStore((state) => state.status);
   const errorMessage = useProductStore((state) => state.errorMessage);
@@ -70,7 +72,7 @@ function ProductList() {
             strokeWidth="4"
           />
         </svg>
-        <span className="sr-only">Cargando productos</span>
+        <span className="sr-only">{t("products.loading")}</span>
       </div>
     );
   }
@@ -82,7 +84,7 @@ function ProductList() {
         className="rounded-dna border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700"
         role="alert"
       >
-        Error: {errorMessage}
+        {t("products.errorPrefix")}: {errorMessage}
       </div>
     );
   }
@@ -91,15 +93,18 @@ function ProductList() {
     <section>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <p className="text-sm text-brand-muted">
-          {filteredProducts.length} productos encontrados
+          {t("products.found", { count: filteredProducts.length })}
         </p>
         <p className="text-sm text-brand-muted">
-          Página {safeCurrentPage} de {totalPages}
+          {t("products.page", {
+            current: safeCurrentPage,
+            total: totalPages,
+          })}
         </p>
       </div>
 
       {paginatedProducts.length === 0 ? (
-        <p className="text-brand-muted">No hay productos para mostrar.</p>
+        <p className="text-brand-muted">{t("products.empty")}</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {paginatedProducts.map((product) => (
@@ -115,7 +120,7 @@ function ProductList() {
           onClick={() => setPage(safeCurrentPage - 1)}
           type="button"
         >
-          Anterior
+          {t("pagination.previous")}
         </button>
 
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(
@@ -141,7 +146,7 @@ function ProductList() {
           onClick={() => setPage(safeCurrentPage + 1)}
           type="button"
         >
-          Siguiente
+          {t("pagination.next")}
         </button>
       </div>
     </section>

@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import ProductList from "../components/organisms/ProductList";
 import { log } from "../services/loggerService";
 import { useProductStore } from "../store/useProductStore";
 
 function Home() {
+  const { t } = useTranslation();
   const status = useProductStore((state) => state.status);
   const searchQuery = useProductStore((state) => state.searchQuery);
   const setSearchQuery = useProductStore((state) => state.setSearchQuery);
@@ -22,21 +24,21 @@ function Home() {
       <section className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Galería de productos</h1>
+            <h1 className="text-3xl font-bold">{t("home.title")}</h1>
             <p className="mt-2 max-w-2xl text-brand-muted">
-              Productos cargados desde Firestore con búsqueda y paginación local.
+              {t("home.subtitle")}
             </p>
           </div>
 
           <label className="w-full md:max-w-sm">
             <span className="mb-2 block text-sm font-semibold text-brand-dark">
-              Buscar producto
+              {t("home.searchLabel")}
             </span>
             <input
               className="input-dna bg-white disabled:cursor-not-allowed disabled:opacity-50"
               disabled={status === "loading"}
               onChange={handleSearchChange}
-              placeholder="Nombre, descripción o categoría"
+              placeholder={t("home.searchPlaceholder")}
               type="search"
               value={searchQuery}
             />

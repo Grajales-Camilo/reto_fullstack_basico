@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import logo from "../../assets/Logo.png";
+import { log } from "../../services/loggerService";
 import { signOut } from "../../services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useCartStore } from "../../store/useCartStore";
 
 function Navbar() {
+  const { t, i18n } = useTranslation();
   const user = useAuthStore((state) => state.user);
   const role = useAuthStore((state) => state.role);
   const loading = useAuthStore((state) => state.loading);
@@ -35,7 +38,7 @@ function Navbar() {
 
         <div className="flex flex-col gap-3 text-sm font-semibold sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
           <Link className="text-brand-dark hover:text-brand-blue" to="/">
-            Home
+            {t("navbar.home")}
           </Link>
 
           {user ? (
@@ -44,30 +47,30 @@ function Navbar() {
                 className="text-brand-dark hover:text-brand-blue"
                 to="/cart"
               >
-                🛒 Carrito ({cartItemsCount})
+                🛒 {t("navbar.cart")} ({cartItemsCount})
               </Link>
               <Link
                 className="text-brand-dark hover:text-brand-blue"
                 to="/orders"
               >
-                🧾 Ver mis compras
+                🧾 {t("navbar.orders")}
               </Link>
               {role === "admin" && (
                 <div className="flex flex-col gap-3 border-brand-border pt-3 sm:flex-row sm:items-center sm:gap-4 sm:border-l sm:pt-0 sm:pl-4">
                   <span className="w-fit rounded-dna bg-brand-blue px-2 py-1 text-xs font-bold text-white">
-                    Admin
+                    {t("navbar.admin")}
                   </span>
                   <Link
                     className="text-brand-dark hover:text-brand-blue"
                     to="/upload"
                   >
-                    Subir imagen
+                    {t("navbar.upload")}
                   </Link>
                   <Link
                     className="text-brand-dark hover:text-brand-blue"
                     to="/dollar"
                   >
-                    Dólar hoy
+                    {t("navbar.dollar")}
                   </Link>
                 </div>
               )}
@@ -77,7 +80,7 @@ function Navbar() {
                 onClick={handleSignOut}
                 type="button"
               >
-                Cerrar sesión
+                {t("navbar.logout")}
               </button>
             </>
           ) : (
@@ -86,16 +89,32 @@ function Navbar() {
                 className="text-brand-dark hover:text-brand-blue"
                 to="/login"
               >
-                Login
+                {t("navbar.login")}
               </Link>
               <Link
                 className="text-brand-dark hover:text-brand-blue"
                 to="/register"
               >
-                Registro
+                {t("navbar.register")}
               </Link>
             </>
           )}
+          <select
+            aria-label={t("language.selector")}
+            className="rounded-dna border border-brand-border bg-white px-3 py-2 text-sm font-semibold text-brand-dark"
+            onChange={(event) => {
+              const next = event.target.value;
+              log("info", "language_change", {
+                from: i18n.resolvedLanguage,
+                to: next,
+              });
+              i18n.changeLanguage(next);
+            }}
+            value={i18n.resolvedLanguage || i18n.language}
+          >
+            <option value="es">{t("language.spanish")}</option>
+            <option value="en">{t("language.english")}</option>
+          </select>
         </div>
       </nav>
     </header>
