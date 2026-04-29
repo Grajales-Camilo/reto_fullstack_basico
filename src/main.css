@@ -12,6 +12,12 @@
   --shadow-dna: 0 4px 11px rgba(77, 97, 255, 0.35);
 }
 
+/* Accesibilidad: foco visible global para navegación con teclado. */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-blue, #2563eb);
+  outline-offset: 2px;
+}
+
 /* 2. Componentes base con @variant o clases de capa */
 @layer components {
   .input-dna {

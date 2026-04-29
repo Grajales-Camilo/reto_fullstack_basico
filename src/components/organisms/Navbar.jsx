@@ -23,7 +23,10 @@ function Navbar() {
 
   return (
     <header className="border-b border-brand-border bg-white text-brand-dark">
-      <nav className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <nav
+        aria-label="Navegacion principal"
+        className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
+      >
         <Link
           className="flex items-center gap-3 text-lg font-bold text-brand-blue"
           to="/"

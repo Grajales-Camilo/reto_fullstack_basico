@@ -99,6 +99,7 @@ function ProductCard({ product }) {
             </p>
           </div>
           <button
+            aria-label={`Agregar ${product.name} al carrito`}
             className="btn-dna w-full px-4 py-2 text-sm sm:w-auto"
             onClick={handleAddToCart}
             type="button"
